@@ -31,7 +31,6 @@ body {
 .card-title {
     font-weight: 600;
 }
-
 .badge {
     font-weight: 500;
     padding: 0.5em 0.8em;
