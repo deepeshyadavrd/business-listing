@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php'; // Include your database connection and session_start()
+require_once 'config/database.php'; // Include your database connection and session_start()
 
 $username_err = $email_err = $password_err = $confirm_password_err = $general_err = '';
 $username = $email = ''; // To pre-fill form in case of error
