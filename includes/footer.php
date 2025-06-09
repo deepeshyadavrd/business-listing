@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>BizDirectory</h5>
+                    <h5>BizNess</h5>
                     <p>Find local businesses and services</p>
                 </div>
                 <div class="col-md-6 text-end">
