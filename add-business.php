@@ -30,6 +30,7 @@
                         <option value="Healthcare">Healthcare</option>
                         <option value="Education">Education</option>
                         <option value="Automotive">Automotive</option>
+                        <option value="Automotive">Fashion</option>
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">
