@@ -17,4 +17,8 @@ try {
 } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
+// Ensure sessions are started on every page that needs them
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
