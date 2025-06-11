@@ -55,7 +55,7 @@ class MY_Controller extends CI_Controller {
      * @param string $view_path The path to the specific content view (e.g., 'dashboard_view', 'businesses/add_business_view').
      * @param array $additional_data Any data specific to the current page.
      */
-    protected function render_page($view_path, $additional_data = array()) {
+    protected function render_page($view_path, $additional_data = array())  {
         // Merge common data from MY_Controller with any additional data specific to this page
         $final_data = array_merge($this->data, $additional_data);
 
