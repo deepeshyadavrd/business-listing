@@ -12,7 +12,6 @@ class Home extends CI_Controller {
         $this->load->helper('url'); // For base_url()
         $this->load->library('session'); // For flash messages
     }
-
     /**
      * Displays the public homepage with a list of active business listings.
      * This acts as your main directory page.
