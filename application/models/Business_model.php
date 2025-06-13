@@ -53,7 +53,6 @@ class Business_model extends CI_Model {
         return $query->row();
     }
 
-
     /**
      * Insert a new business listing into the database.
      * @param array $data Data for the new business.
