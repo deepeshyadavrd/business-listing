@@ -9,6 +9,7 @@ class Home extends CI_Controller {
         parent::__construct();
         // Database model for businesses is autoloaded.
         // $this->load->model('business_model');
+        $this->load->model('business_model');
         $this->load->helper('url'); // For base_url()
         $this->load->library('session'); // For flash messages
     }
