@@ -30,6 +30,7 @@ class Home extends CI_Controller {
         // Render the page using the main layout
         $data['main_content'] = 'home_public_view'; // Specify the content view
         $this->load->view('layouts/main_layout', $data);
+        
     }
 
     /**
