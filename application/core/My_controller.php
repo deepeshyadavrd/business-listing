@@ -49,6 +49,16 @@ class MY_Controller extends CI_Controller {
     }
 
     /**
+     * Checks if the currently logged-in user is an administrator.
+     * Assumes 'admin' group has group_id = 1.
+     *
+     * @return bool TRUE if user is admin, FALSE otherwise.
+     */
+    protected function is_admin() {
+        return ($this->session->userdata('loggedin') && $this->session->userdata('group_id') == 1);
+    }
+    
+    /**
      * A common method to render pages with the main layout.
      * Use this in your controllers instead of loading header, view, footer separately.
      *
