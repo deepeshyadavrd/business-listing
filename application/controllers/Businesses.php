@@ -14,8 +14,8 @@ class Businesses extends MY_Controller {
             exit;
         }
         // Business_model is autoloaded in config/autoload.php
-        // $this->load->model('business_model');]
-        
+        $this->load->model('business_model');
+
         // >>> THE FIX: Explicitly load the Upload Library here <<<
         $this->load->library('upload'); // <-- ADD THIS LINE
     }
