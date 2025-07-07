@@ -54,6 +54,30 @@ class Business_model extends CI_Model {
     }
 
     /**
+     * Get ALL business listings, regardless of status.
+     * Used for admin panel.
+     * @return array An array of business data objects.
+     */
+    public function get_all_businesses() {
+        $this->db->order_by('created_at', 'DESC');
+        $query = $this->db->get('businesses');
+        return $query->result();
+    }
+
+    /**
+     * Update the status of a business listing.
+     * Used by admin.
+     * @param int $id The business ID.
+     * @param int $status The new status (0=Pending, 1=Active, 2=Rejected).
+     * @return bool TRUE on success, FALSE on failure.
+     */
+    public function update_business_status($id, $status) {
+        $this->db->set('status', $status);
+        $this->db->where('id', $id);
+        return $this->db->update('businesses');
+    }
+    
+    /**
      * Insert a new business listing into the database.
      * @param array $data Data for the new business.
      * @return int Inserted business ID on success, or FALSE on failure.
