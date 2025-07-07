@@ -136,8 +136,8 @@ class Auth extends CI_Controller {
         // Destroy the session.
         session_destroy();
 
-        // Set a flash message
+        // Set a flash message for the next page (login page)
         $this->session->set_flashdata('success_message', 'You have been successfully logged out.');
-        redirect(base_url('login')); // Redirect to login page after logout
+        redirect(base_url('login')); // Redirects to the login page
     }
 }
