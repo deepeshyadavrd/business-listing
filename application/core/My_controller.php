@@ -63,6 +63,6 @@ class MY_Controller extends CI_Controller {
         $final_data['main_content'] = $view_path;
 
         // Load the main layout view. The main layout will then load the specific content.
-        $this->load->view('layouts/main_layout', $final_data);
+        $this->load->view('layouts/main_layouts', $final_data);
     }
 }

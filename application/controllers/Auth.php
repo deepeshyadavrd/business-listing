@@ -7,7 +7,7 @@ class Auth extends CI_Controller {
         parent::__construct();
         // Models and libraries are autoloaded in config/autoload.php,
         // so no need to load them here again.
-        // $this->load->model('user_model');
+        $this->load->model('user_model');
         // $this->load->library('form_validation');
         // $this->load->library('session');
         // $this->load->helper('url');

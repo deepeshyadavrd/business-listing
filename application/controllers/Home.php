@@ -29,7 +29,7 @@ class Home extends CI_Controller {
 
         // Render the page using the main layout
         $data['main_content'] = 'home_public_view'; // Specify the content view
-        $this->load->view('layouts/main_layout', $data);
+        $this->load->view('layouts/main_layouts', $data);
         
     }
 
@@ -56,6 +56,6 @@ class Home extends CI_Controller {
 
         // Render the page
         $data['main_content'] = 'businesses/view_single_business_view'; // Create this view
-        $this->load->view('layouts/main_layout', $data);
+        $this->load->view('layouts/main_layouts', $data);
     }
 }
