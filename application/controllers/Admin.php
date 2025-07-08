@@ -14,7 +14,7 @@ class Admin extends MY_Controller {
             exit;
         }
         // Business_model is autoloaded in config/autoload.php
-        // $this->load->model('business_model');
+        $this->load->model('business_model');
     }
 
     /**

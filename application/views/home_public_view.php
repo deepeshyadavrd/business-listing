@@ -35,4 +35,910 @@
             </div>
         <?php endforeach; ?>
     </div>
+    
 <?php endif; ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Directory - Find & List Local Businesses</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        :root {
+            --primary-color: #2563EB;
+            --primary-dark: #1D4ED8;
+            --secondary-color: #64748B;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --light-gray: #F8FAFC;
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1E293B;
+            line-height: 1.6;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 100px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .search-container {
+            background: white;
+            border-radius: 50px;
+            padding: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            color: #1E293B;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .search-btn {
+            background: var(--primary-color);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .business-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .business-image {
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .business-info {
+            padding: 20px;
+        }
+
+        .business-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1E293B;
+            margin-bottom: 5px;
+        }
+
+        .business-category {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            color: #F59E0B;
+            margin-bottom: 10px;
+        }
+
+        .business-location {
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .verified-badge {
+            background: var(--success-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1E293B;
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: var(--light-gray);
+            padding: 80px 0;
+        }
+
+        .cta-primary {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-primary:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .cta-secondary {
+            background: white;
+            color: var(--primary-color);
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px;
+            border: 2px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .stats-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stats-label {
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .testimonial-text {
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #1E293B;
+        }
+
+        .navbar {
+            background: white !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            color: #1E293B !important;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .section-padding {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-building"></i> BusinessHub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#businesses">Businesses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#verification">Verification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cta-primary" href="#list-business">List Your Business</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="hero-content text-center">
+                        <h1 class="display-3 fw-bold mb-4">Find & List Local Businesses</h1>
+                        <p class="lead mb-5">Discover amazing local businesses or grow your own business with our comprehensive directory platform</p>
+                        
+                        <div class="search-container">
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control search-input" placeholder="Search businesses...">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control search-input" placeholder="Location">
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn search-btn w-100">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Businesses -->
+    <section id="businesses" class="section-padding">
+        <div class="container">
+            <h2 class="section-title fade-in">Featured Businesses</h2>
+            <p class="section-subtitle fade-in">Discover top-rated businesses in your area</p>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="business-card fade-in">
+                        <div class="business-image">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="business-info">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="business-name">Mario's Italian Restaurant</h5>
+                                <span class="verified-badge">
+                                    <i class="fas fa-check"></i> Verified
+                                </span>
+                            </div>
+                            <p class="business-category">Restaurant • Italian Cuisine</p>
+                            <div class="rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ms-2">4.9 (124 reviews)</span>
+                            </div>
+                            <div class="business-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Main Street, Downtown</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="business-card fade-in">
+                        <div class="business-image">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <div class="business-info">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="business-name">Elite Hair Salon</h5>
+                                <span class="verified-badge">
+                                    <i class="fas fa-check"></i> Verified
+                                </span>
+                            </div>
+                            <p class="business-category">Beauty • Hair Care</p>
+                            <div class="rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ms-2">4.8 (89 reviews)</span>
+                            </div>
+                            <div class="business-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>456 Oak Avenue, Midtown</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="business-card fade-in">
+                        <div class="business-image">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <div class="business-info">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="business-name">Quick Fix Auto Repair</h5>
+                                <span class="verified-badge">
+                                    <i class="fas fa-check"></i> Verified
+                                </span>
+                            </div>
+                            <p class="business-category">Automotive • Car Repair</p>
+                            <div class="rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ms-2">4.7 (156 reviews)</span>
+                            </div>
+                            <div class="business-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>789 Industrial Blvd, East Side</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why List Your Business -->
+    <section id="list-business" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title fade-in">Why List Your Business?</h2>
+            <p class="section-subtitle fade-in">Grow your business with our powerful platform</p>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h4 class="feature-title">Increased Visibility</h4>
+                        <p class="feature-description">Get discovered by thousands of potential customers searching for businesses like yours in your area.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="feature-title">Reach More Customers</h4>
+                        <p class="feature-description">Connect with a wider audience and attract customers who are actively looking for your services.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="feature-title">Business Analytics</h4>
+                        <p class="feature-description">Track your business performance with detailed analytics and insights to make data-driven decisions.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4 class="feature-title">Customer Reviews</h4>
+                        <p class="feature-description">Build trust and credibility with authentic customer reviews and ratings that boost your reputation.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4 class="feature-title">Mobile Optimized</h4>
+                        <p class="feature-description">Your business profile looks great on all devices, ensuring customers can find you anywhere.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h4 class="feature-title">Marketing Tools</h4>
+                        <p class="feature-description">Access powerful marketing tools to promote your business and run targeted campaigns.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="features" class="section-padding">
+        <div class="container">
+            <h2 class="section-title fade-in">Why Choose BusinessHub?</h2>
+            <p class="section-subtitle fade-in">We're committed to helping your business succeed</p>
+            
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="stats-card fade-in">
+                                <span class="stats-number">10K+</span>
+                                <span class="stats-label">Listed Businesses</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="stats-card fade-in">
+                                <span class="stats-number">50K+</span>
+                                <span class="stats-label">Monthly Visitors</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="stats-card fade-in">
+                                <span class="stats-number">95%</span>
+                                <span class="stats-label">Customer Satisfaction</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="stats-card fade-in">
+                                <span class="stats-number">24/7</span>
+                                <span class="stats-label">Support Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="ps-lg-4">
+                        <h3 class="fw-bold mb-4 fade-in">Trusted by Businesses Worldwide</h3>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="d-flex align-items-start fade-in">
+                                    <div class="feature-icon me-3" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold">Secure Platform</h5>
+                                        <p class="text-muted">Advanced security measures to protect your business data</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="d-flex align-items-start fade-in">
+                                    <div class="feature-icon me-3" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                                        <i class="fas fa-headset"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold">Expert Support</h5>
+                                        <p class="text-muted">Dedicated support team to help you succeed</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="d-flex align-items-start fade-in">
+                                    <div class="feature-icon me-3" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                                        <i class="fas fa-rocket"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold">Easy Setup</h5>
+                                        <p class="text-muted">Get your business listed in minutes, not hours</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="d-flex align-items-start fade-in">
+                                    <div class="feature-icon me-3" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold">Regular Updates</h5>
+                                        <p class="text-muted">Continuous platform improvements and new features</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Verification Section -->
+    <section id="verification" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title fade-in">Why Verification Matters</h2>
+            <p class="section-subtitle fade-in">Build trust with your customers through our verification process</p>
+            
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="pe-lg-4">
+                        <h3 class="fw-bold mb-4 fade-in">Verified Businesses Get 3x More Customers</h3>
+                        <div class="mb-4 fade-in">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Identity Verification</h5>
+                                    <p class="text-muted mb-0">Confirm your business identity with official documents</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Location Verification</h5>
+                                    <p class="text-muted mb-0">Verify your business address and operating hours</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Contact Verification</h5>
+                                    <p class="text-muted mb-0">Confirm your phone number and email address</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="testimonial-card fade-in">
+                                <p class="testimonial-text">"Getting verified on BusinessHub increased our customer inquiries by 300%. The verification badge gives customers confidence to choose us over competitors."</p>
+                                <div class="testimonial-author">- Sarah Johnson, Owner of Elite Hair Salon</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="testimonial-card fade-in">
+                                <p class="testimonial-text">"The verification process was quick and easy. Now customers trust us more and we get better quality leads through the platform."</p>
+                                <div class="testimonial-author">- Mike Rodriguez, Quick Fix Auto Repair</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title fade-in">Ready to Grow Your Business?</h2>
+                    <p class="section-subtitle fade-in">Join thousands of successful businesses on our platform</p>
+                    <div class="fade-in">
+                        <a href="#" class="cta-primary">List Your Business Free</a>
+                        <a href="#" class="cta-secondary">Search Businesses</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-building"></i> BusinessHub</h5>
+                    <p>Your trusted partner for business growth and customer discovery.</p>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6 class="fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Home</a></li>
+                        <li><a href="#" class="text-white-50">About</a></li>
+                        <li><a href="#" class="text-white-50">Pricing</a></li>
+                        <li><a href="#" class="text-white-50">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6 class="fw-bold mb-3">For Businesses</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">List Business</a></li>
+                        <li><a href="#" class="text-white-50">Get Verified</a></li>
+                        <li><a href="#" class="text-white-50">Premium</a></li>
+                        <li><a href="#" class="text-white-50">Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6 class="fw-bold mb-3">For Customers</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Search</a></li>
+                        <li><a href="#" class="text-white-50">Reviews</a></li>
+                        <li><a href="#" class="text-white-50">Mobile App</a></li>
+                        <li><a href="#" class="text-white-50">Help</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6 class="fw-bold mb-3">Connect</h6>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="text-white-50"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white-50"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white-50"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white-50"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center text-white-50">
+                <p>&copy; 2024 BusinessHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Search functionality
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-input').value;
+            if (searchTerm.trim()) {
+                // Simulate search (in real app, this would make an API call)
+                alert(`Searching for: ${searchTerm}`);
+            }
+        });
+
+        // Add enter key support for search
+        document.querySelectorAll('.search-input').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.querySelector('.search-btn').click();
+                }
+            });
+        });
+
+        // Business card hover effects
+        document.querySelectorAll('.business-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            } else {
+                navbar.style.backgroundColor = 'white';
+                navbar.style.backdropFilter = 'none';
+            }
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Animate counters when they come into view
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statsNumber = entry.target.querySelector('.stats-number');
+                    const target = parseInt(statsNumber.textContent.replace(/[^0-9]/g, ''));
+                    animateCounter(statsNumber, target);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stats-card').forEach(card => {
+            statsObserver.observe(card);
+        });
+
+        // Mobile menu close on link click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                
+                if (navbarCollapse.classList.contains('show')) {
+                    navbarToggler.click();
+                }
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="/public/dhws-data-injector.js"></script>
+</body>
+</html>
