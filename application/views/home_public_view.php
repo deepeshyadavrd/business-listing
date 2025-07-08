@@ -1,11 +1,44 @@
-<div class="jumbotron text-center">
+<!-- <div class="jumbotron text-center">
     <h1 class="display-4">Welcome to Urbanwood Business Directory!</h1>
     <p class="lead">Discover local businesses and services in Gurugram.</p>
     <hr class="my-4">
     <p>Are you a business owner? <a href="<?php echo base_url('register'); ?>">Register your business</a> today!</p>
-</div>
+</div> -->
+<section id="home" class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="hero-content text-center">
+                        <h1 class="display-3 fw-bold mb-4">Find & List Local Businesses</h1>
+                        <p class="lead mb-5">Discover amazing local businesses or grow your own business with our comprehensive directory platform</p>
+                        
+                        <div class="search-container">
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control search-input" placeholder="Search businesses...">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control search-input" placeholder="Location">
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn search-btn w-100">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<h2 class="mb-4">Featured Businesses</h2>
+<section id="businesses" class="section-padding">
+        <div class="container">
+            <h2 class="section-title fade-in">Featured Businesses</h2>
+            <p class="section-subtitle fade-in">Discover top-rated businesses in your area</p>
+            
+            <!-- <div class="row"> -->
 
 <?php if (empty($businesses)): ?>
     <div class="alert alert-info" role="alert">
@@ -14,13 +47,50 @@
 <?php else: ?>
     <div class="row">
         <?php foreach ($businesses as $business): ?>
-            <div class="col-md-4 mb-4">
+            <div class="col-lg-4 col-md-6">
+                    <div class="business-card fade-in">
+                        <div class="business-image">
+                        <?php if ($business->image): ?>
+                            <img src="<?php echo base_url($business->image); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($business->business_name); ?>" style="height: 200px; object-fit: cover;">
+                        <?php else: ?>
+                            <img src="https://placehold.co/400x200/e0e0e0/333333?text=Business+Image" class="card-img-top" alt="Placeholder" style="height: 200px; object-fit: cover;">
+                        <?php endif; ?>
+                        
+                            <!-- <i class="fas fa-utensils"></i> -->
+                        </div>
+                        <div class="business-info">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="business-name"><?php echo htmlspecialchars($business->business_name); ?></h5>
+                                <span class="verified-badge">
+                                    <i class="fas fa-check"></i> Verified
+                                </span>
+                            </div>
+                            <p class="business-category"><?php echo htmlspecialchars($business->category); ?></p>
+                            <div class="rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ms-2">4.9 (124 reviews)</span>
+                            </div>
+                            <div class="business-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><?php echo htmlspecialchars($business->address . ', ' . $business->city . ', ' . $business->state); ?><br>
+                            <?php if ($business->phone): ?><i class="fas fa-phone-alt mr-1"></i> <?php echo htmlspecialchars($business->phone); ?><br><?php endif; ?>
+                            <?php if ($business->email): ?><i class="fas fa-envelope mr-1"></i> <?php echo htmlspecialchars($business->email); ?><br><?php endif; ?></span>
+                            </div>
+                            <a href="<?php echo base_url('listings/' . $business->id); ?>" class="btn btn-primary btn-sm mt-2">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            <!-- <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <?php if ($business->image): ?>
+                     <?php if ($business->image): ?>
                         <img src="<?php echo base_url($business->image); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($business->business_name); ?>" style="height: 200px; object-fit: cover;">
                     <?php else: ?>
                         <img src="https://placehold.co/400x200/e0e0e0/333333?text=Business+Image" class="card-img-top" alt="Placeholder" style="height: 200px; object-fit: cover;">
-                    <?php endif; ?>
+                    <?php endif; ?> --
                     <div class="card-body">
                         <h5 class="card-title"><?php echo htmlspecialchars($business->business_name); ?></h5>
                         <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($business->category); ?></h6>
@@ -32,12 +102,109 @@
                         <a href="<?php echo base_url('listings/' . $business->id); ?>" class="btn btn-primary btn-sm mt-2">View Details</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         <?php endforeach; ?>
     </div>
     
 <?php endif; ?>
 
+        </div>
+    </section>
+<!-- <section id="businesses" class="section-padding">
+        <div class="container">
+            <h2 class="section-title fade-in">Featured Businesses</h2>
+            <p class="section-subtitle fade-in">Discover top-rated businesses in your area</p>
+            
+            <div class="row"> -->
+                <!-- <div class="col-lg-4 col-md-6">
+                    <div class="business-card fade-in">
+                        <div class="business-image">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="business-info">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="business-name">Mario's Italian Restaurant</h5>
+                                <span class="verified-badge">
+                                    <i class="fas fa-check"></i> Verified
+                                </span>
+                            </div>
+                            <p class="business-category">Restaurant • Italian Cuisine</p>
+                            <div class="rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ms-2">4.9 (124 reviews)</span>
+                            </div>
+                            <div class="business-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Main Street, Downtown</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="business-card fade-in">
+                        <div class="business-image">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <div class="business-info">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="business-name">Elite Hair Salon</h5>
+                                <span class="verified-badge">
+                                    <i class="fas fa-check"></i> Verified
+                                </span>
+                            </div>
+                            <p class="business-category">Beauty • Hair Care</p>
+                            <div class="rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ms-2">4.8 (89 reviews)</span>
+                            </div>
+                            <div class="business-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>456 Oak Avenue, Midtown</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="business-card fade-in">
+                        <div class="business-image">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <div class="business-info">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="business-name">Quick Fix Auto Repair</h5>
+                                <span class="verified-badge">
+                                    <i class="fas fa-check"></i> Verified
+                                </span>
+                            </div>
+                            <p class="business-category">Automotive • Car Repair</p>
+                            <div class="rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ms-2">4.7 (156 reviews)</span>
+                            </div>
+                            <div class="business-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>789 Industrial Blvd, East Side</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            <!-- </div>
+        </div>
+    </section> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -374,7 +541,7 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <!-- <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#"><i class="fas fa-building"></i> BusinessHub</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -400,10 +567,10 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
     <!-- Hero Section -->
-    <section id="home" class="hero-section">
+    <!-- <section id="home" class="hero-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 mx-auto">
@@ -430,7 +597,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Featured Businesses -->
     <section id="businesses" class="section-padding">
