@@ -340,13 +340,13 @@
                             <form action="<?php echo base_url('listings/search'); ?>" method="GET">
                                 <div class="row g-0 align-items-center">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control search-input" placeholder="Search businesses...">
+                                        <input type="text" class="form-control search-input" name="query" placeholder="Search businesses by name or category..."  value="<?php echo htmlspecialchars($this->input->get('query') ?: ''); ?>">
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control search-input" placeholder="Location">
+                                        <input type="text" class="form-control search-input" name="location" placeholder="Location (City, State, Zip)" value="<?php echo htmlspecialchars($this->input->get('location') ?: ''); ?>">
                                     </div>
                                     <div class="col-md-2">
-                                        <button class="btn search-btn w-100">
+                                        <button type="submit" class="btn search-btn w-100">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
