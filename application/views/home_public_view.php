@@ -337,19 +337,21 @@
                         <p class="lead mb-5">Discover amazing local businesses or grow your own business with our comprehensive directory platform</p>
                         
                         <div class="search-container">
-                            <div class="row g-0">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control search-input" placeholder="Search businesses...">
+                            <form action="<?php echo base_url('listings/search'); ?>" method="GET">
+                                <div class="row g-0 align-items-center">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control search-input" placeholder="Search businesses...">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control search-input" placeholder="Location">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn search-btn w-100">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control search-input" placeholder="Location">
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn search-btn w-100">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
