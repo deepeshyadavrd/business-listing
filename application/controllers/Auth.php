@@ -116,6 +116,9 @@ class Auth extends CI_Controller {
                     $redirect_url = $this->session->userdata('redirect_after_login');
                     $this->session->unset_userdata('redirect_after_login'); // Clear it
                     redirect($redirect_url);
+                } elseif ($this->session->userdata('group_id') == 1) { // Assuming group_id 1 is for 'admin'
+                    // Priority 2: If no specific redirect URL, and user is admin, go to admin dashboard
+                    redirect(base_url('admin'));
                 } else {
                     redirect(base_url('dashboard')); // Default dashboard
                 }
