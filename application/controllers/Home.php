@@ -58,4 +58,27 @@ class Home extends CI_Controller {
         $data['main_content'] = 'businesses/view_single_business_view'; // Create this view
         $this->load->view('layouts/main_layouts', $data);
     }
+    /**
+     * Handles business search queries and displays results.
+     */
+    public function search() {
+        $search_query = $this->input->get('query', TRUE);    // Get search term from GET, XSS cleaned
+        $search_location = $this->input->get('location', TRUE); // Get location term from GET, XSS cleaned
+
+        $data['title'] = 'Search Results for "' . htmlspecialchars($search_query) . '"';
+        $data['search_query'] = $search_query;
+        $data['search_location'] = $search_location;
+
+        // Fetch businesses based on search terms
+        $data['businesses'] = $this->business_model->search_businesses($search_query, $search_location);
+
+        // Common data for layout
+        $data['site_name'] = 'Urbanwood Business Directory';
+        $data['logged_in_username'] = $this->session->userdata('username');
+        $data['logged_in_user_group_name'] = $this->session->userdata('group_name');
+
+        // Render the search results page
+        $data['main_content'] = 'search_results_view'; // Specify the content view
+        $this->load->view('layouts/main_layout', $data);
+    }
 }
