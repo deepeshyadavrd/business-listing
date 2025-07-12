@@ -65,6 +65,39 @@ class Business_model extends CI_Model {
     }
 
     /**
+     * Search for active business listings based on query and location.
+     * @param string $query The search term for business name or category.
+     * @param string $location The search term for city, state, or zip code.
+     * @return array An array of matching business data objects.
+     */
+    public function search_businesses($query = '', $location = '') {
+        $this->db->where('status', 1); // Only search active businesses
+
+        if (!empty($query)) {
+            // Search in business_name OR description OR category
+            $this->db->group_start(); // Start a group for OR conditions
+            $this->db->like('business_name', $query);
+            $this->db->or_like('description', $query);
+            $this->db->or_like('category', $query);
+            $this->db->group_end(); // End the OR group
+        }
+
+        if (!empty($location)) {
+            // Search in address OR city OR state OR zip_code
+            $this->db->group_start(); // Start a group for OR conditions
+            $this->db->like('address', $location);
+            $this->db->or_like('city', $location);
+            $this->db->or_like('state', $location);
+            $this->db->or_like('zip_code', $location);
+            $this->db->group_end(); // End the OR group
+        }
+
+        $this->db->order_by('business_name', 'ASC'); // Order results alphabetically
+        $query = $this->db->get('businesses');
+        return $query->result();
+    }
+    
+    /**
      * Update the status of a business listing.
      * Used by admin.
      * @param int $id The business ID.
