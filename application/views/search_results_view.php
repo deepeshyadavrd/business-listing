@@ -48,6 +48,7 @@
                                 <?php if ($business->phone): ?><i class="fas fa-phone-alt mr-1"></i> <?php echo htmlspecialchars($business->phone); ?><br><?php endif; ?>
                                 <?php if ($business->email): ?><i class="fas fa-envelope mr-1"></i> <?php echo htmlspecialchars($business->email); ?><br><?php endif; ?>
                             </p>
+                            
                             <a href="<?php echo base_url('listings/' . $business->id); ?>" class="btn btn-primary btn-sm mt-2">View Details</a>
                         </div>
                     </div>
