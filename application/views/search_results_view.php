@@ -44,6 +44,7 @@
                             <h5 class="card-title"><?php echo htmlspecialchars($business->business_name); ?></h5>
                             <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($business->category); ?></h6>
                             <p class="card-text">
+                                
                                 <?php echo htmlspecialchars($business->address . ', ' . $business->city . ', ' . $business->state); ?><br>
                                 <?php if ($business->phone): ?><i class="fas fa-phone-alt mr-1"></i> <?php echo htmlspecialchars($business->phone); ?><br><?php endif; ?>
                                 <?php if ($business->email): ?><i class="fas fa-envelope mr-1"></i> <?php echo htmlspecialchars($business->email); ?><br><?php endif; ?>
