@@ -79,6 +79,6 @@ class Home extends CI_Controller {
 
         // Render the search results page
         $data['main_content'] = 'search_results_view'; // Specify the content view
-        $this->load->view('layouts/main_layout', $data);
+        $this->load->view('layouts/main_layouts', $data);
     }
 }
