@@ -105,4 +105,63 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('user_groups', array('id' => $group_id));
         return $query->row();
     }
+    // --- NEW METHODS FOR FORGOT PASSWORD ---
+
+    /**
+     * Generates and stores a password reset token for a given email.
+     * @param string $email The user's email address.
+     * @param string $token The generated unique token.
+     * @param int $expiry_minutes The number of minutes until the token expires.
+     * @return bool TRUE on success, FALSE on failure.
+     */
+    public function save_password_reset_token($email, $token, $expiry_minutes = 60) {
+        // Delete any existing tokens for this email to ensure only one active token
+        $this->db->where('email', $email);
+        $this->db->delete('password_resets');
+
+        $data = array(
+            'email'      => $email,
+            'token'      => $token,
+            'created_at' => date('Y-m-d H:i:s'),
+            'expires_at' => date('Y-m-d H:i:s', strtotime('+' . $expiry_minutes . ' minutes'))
+        );
+        return $this->db->insert('password_resets', $data);
+    }
+
+    /**
+     * Retrieves a valid password reset token for a given email and token string.
+     * @param string $email The user's email.
+     * @param string $token The token string.
+     * @return object|null The token object if valid and not expired, otherwise NULL.
+     */
+    public function get_valid_password_reset_token($email, $token) {
+        $this->db->where('email', $email);
+        $this->db->where('token', $token);
+        $this->db->where('expires_at >', date('Y-m-d H:i:s')); // Ensure token is not expired
+        $query = $this->db->get('password_resets');
+        return $query->row();
+    }
+
+    /**
+     * Deletes a password reset token after it has been used or if it's invalid.
+     * @param string $token The token string to delete.
+     * @return bool TRUE on success, FALSE on failure.
+     */
+    public function delete_password_reset_token($token) {
+        $this->db->where('token', $token);
+        return $this->db->delete('password_resets');
+    }
+
+    /**
+     * Updates a user's password.
+     * @param string $email The user's email.
+     * @param string $new_password The new plain text password.
+     * @return bool TRUE on success, FALSE on failure.
+     */
+    public function update_user_password($email, $new_password) {
+        $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
+        $this->db->set('password', $hashed_password);
+        $this->db->where('email', $email);
+        return $this->db->update('users');
+    }
 }
