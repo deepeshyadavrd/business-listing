@@ -170,7 +170,7 @@
             justify-content: center;
             color: white;
             font-size: 2rem;
-            margin: 0 auto 20px;
+            /* margin: 0 auto 20px; */
         }
 
         .feature-card {
