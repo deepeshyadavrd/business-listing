@@ -48,7 +48,23 @@ class Home extends CI_Controller {
 
         $data['business'] = $business;
         $data['title'] = $business->business_name . ' - Business Details';
-
+// --- NEW: Categories for the homepage section ---
+        // In a real application, you would fetch these from a 'categories' table
+        $data['categories'] = [
+            ['name' => 'Furniture', 'icon' => 'fas fa-chair'],
+            ['name' => 'Home Decor', 'icon' => 'fas fa-lightbulb'],
+            ['name' => 'Interior Design', 'icon' => 'fas fa-paint-roller'],
+            ['name' => 'Renovation', 'icon' => 'fas fa-hammer'],
+            ['name' => 'Appliances', 'icon' => 'fas fa-blender'],
+            ['name' => 'Electronics', 'icon' => 'fas fa-tv'],
+            ['name' => 'Real Estate', 'icon' => 'fas fa-home'],
+            ['name' => 'Services', 'icon' => 'fas fa-tools'],
+            ['name' => 'Retail', 'icon' => 'fas fa-shopping-bag'],
+            ['name' => 'Food & Beverage', 'icon' => 'fas fa-utensils'],
+            ['name' => 'Health & Beauty', 'icon' => 'fas fa-spa'],
+            ['name' => 'Automotive', 'icon' => 'fas fa-car']
+        ];
+        // --- END NEW ---
         // Common data for layout
         $data['site_name'] = 'Urbanwood Business Directory';
         $data['logged_in_username'] = $this->session->userdata('username');
