@@ -322,6 +322,31 @@
                 padding: 60px 0;
             }
         }
+        /* Add to your assets/css/style.css */
+
+.category-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    height: 120px; /* Fixed height for consistency */
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: #007bff; /* Highlight on hover */
+}
+
+.category-card .text-primary {
+    color: #007bff !important; /* Ensure icon color */
+}
+
+.category-card .card-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin-top: 5px;
+}
     </style>
 <section id="home" class="hero-section">
         <div class="container">
