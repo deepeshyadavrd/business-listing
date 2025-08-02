@@ -354,6 +354,29 @@
         </div>
     </section>
 
+
+    <!-- NEW: Category Section -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Browse Categories</h2>
+    <?php if (!empty($categories)): ?>
+        <div class="row justify-content-center">
+            <?php foreach ($categories as $category): ?>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+                    <a href="<?php echo base_url('listings/search?query=' . urlencode($category['name'])); ?>" class="card category-card text-center h-100 d-flex flex-column justify-content-center align-items-center p-3 text-decoration-none">
+                        <i class="<?php echo htmlspecialchars($category['icon']); ?> fa-3x mb-2 text-primary"></i>
+                        <h6 class="card-title text-dark"><?php echo htmlspecialchars($category['name']); ?></h6>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info text-center" role="alert">
+            No categories available to browse at the moment.
+        </div>
+    <?php endif; ?>
+</div>
+<!-- END NEW: Category Section -->
+ 
 <section id="businesses" class="section-padding">
         <div class="container">
             <h2 class="section-title fade-in">Featured Businesses</h2>
