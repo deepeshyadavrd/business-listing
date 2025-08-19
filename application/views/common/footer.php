@@ -168,4 +168,4 @@
         });
     });
 </script>
-<script id="dhws-dataInjector" src="/public/dhws-data-injector.js"></script>
+<!-- <script id="dhws-dataInjector" src="/public/dhws-data-injector.js"></script> -->
