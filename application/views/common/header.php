@@ -34,4 +34,19 @@
             </ul>
         </div>
     </div>
+    <div class="location-selector">
+    <form action="<?php echo site_url('listings/change_location'); ?>" method="post">
+        <label for="city_selector">Select Your City:</label>
+        <select id="city_selector" name="city">
+            <option value="">All Locations</option>
+            <?php foreach ($cities as $city): ?>
+                <option value="<?php echo htmlspecialchars($city['city_name']); ?>"
+                    <?php echo (isset($selected_city) && $selected_city == $city['city_name']) ? 'selected' : ''; ?>>
+                    <?php echo htmlspecialchars($city['city_name']); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit">Go</button>
+    </form>
+</div>
 </header>
