@@ -34,19 +34,101 @@
             </ul>
         </div>
     </div>
-    <div class="location-selector">
-    <form action="<?php echo site_url('listings/change_location'); ?>" method="post">
-        <label for="city_selector">Select Your City:</label>
-        <select id="city_selector" name="city">
-            <option value="">All Locations</option>
-            <?php foreach ($cities as $city): ?>
-                <option value="<?php echo htmlspecialchars($city['city_name']); ?>"
-                    <?php echo (isset($selected_city) && $selected_city == $city['city_name']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($city['city_name']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <button type="submit">Go</button>
+    <div id="city-manual-selector" style="display:none;">
+    <p>Please select your city to get local listings:</p>
+    <form id="city-form-manual">
+        <select id="manual-city-dropdown" name="city">
+            </select>
+        <button type="submit">Set City</button>
     </form>
 </div>
 </header>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Function to handle the fallback to manual city selection
+        function showManualCitySelector() {
+            // Fetch cities data from CodeIgniter and populate the dropdown
+            $.ajax({
+                url: '<?php echo site_url("listings/get_cities_json"); ?>',
+                type: 'GET',
+                dataType: 'json',
+                success: function(cities) {
+                    let dropdown = $('#manual-city-dropdown');
+                    dropdown.empty(); // Clear existing options
+                    dropdown.append('<option value="">Select a City</option>');
+                    $.each(cities, function(key, city) {
+                        dropdown.append($('<option></option>').attr('value', city.city_name).text(city.city_name));
+                    });
+                    $('#city-manual-selector').show();
+                },
+                error: function() {
+                    console.error('Failed to load city list from server.');
+                    // Display a static message if AJAX fails
+                    $('#city-manual-selector').show();
+                }
+            });
+        }
+
+        // 1. Check if the Geolocation API is supported
+        if ("geolocation" in navigator) {
+            // 2. Request user's location
+            navigator.geolocation.getCurrentPosition(function(position) {
+                // Success: Get lat/long and send to server for reverse geocoding
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                
+                $.ajax({
+                    url: '<?php echo site_url("listings/set_location_from_coords"); ?>',
+                    type: 'POST',
+                    data: { lat: latitude, long: longitude },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            console.log('Location set to: ' + response.city);
+                            // Optional: Reload the page to show listings from the new city
+                            location.reload(); 
+                        } else {
+                            console.error('Failed to set city from coordinates: ' + response.message);
+                            showManualCitySelector();
+                        }
+                    },
+                    error: function() {
+                        console.error('AJAX failed to communicate with server.');
+                        showManualCitySelector();
+                    }
+                });
+
+            }, function(error) {
+                // Failure: User denied access or an error occurred
+                console.error('Geolocation access denied or failed:', error.message);
+                showManualCitySelector();
+            });
+        } else {
+            // Geolocation is not supported by the browser
+            console.warn('Geolocation is not supported by this browser.');
+            showManualCitySelector();
+        }
+
+        // Handle manual city form submission
+        $('#city-form-manual').on('submit', function(e) {
+            e.preventDefault();
+            const selectedCity = $('#manual-city-dropdown').val();
+            if (selectedCity) {
+                $.ajax({
+                    url: '<?php echo site_url("listings/change_location"); ?>',
+                    type: 'POST',
+                    data: { city: selectedCity },
+                    success: function() {
+                        location.reload(); 
+                    },
+                    error: function() {
+                        alert('Error: Could not save city. Please try again.');
+                    }
+                });
+            } else {
+                alert('Please select a city.');
+            }
+        });
+    });
+</script>
