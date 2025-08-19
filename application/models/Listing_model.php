@@ -29,4 +29,29 @@ class Listing_model extends CI_Model {
         $query = $this->db->get('businesses');
         return $query->result_array();
     }
+    public function get_nearest_city($user_lat, $user_long) {
+        // This is a simple Haversine formula to find the closest point
+        // It's a computationally intensive query, so use it sparingly.
+        $sql = "
+            SELECT 
+                city_name,
+                (
+                    6371 * acos(
+                        cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?))
+                        + sin(radians(?)) * sin(radians(latitude))
+                    )
+                ) AS distance
+            FROM
+                cities
+            ORDER BY distance
+            LIMIT 1;
+        ";
+
+        $query = $this->db->query($sql, array($user_lat, $user_long, $user_lat));
+        
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        }
+        return false;
+    }
 }
